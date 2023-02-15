@@ -1,0 +1,49 @@
+# Default values for my-java-app.
+
+# The name of the Java application.
+appName: flight-booking-system
+
+# The Docker image to use for the Java application.
+image:
+  repository: devcontainerregistry33dev2.azurecr.io/flightbookingsystemsample
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# The number of replicas to run for the Java application.
+replicaCount: 1
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+# The type of Kubernetes service to use for the Java application.
+
+service:
+  name: flight-booking-system
+  type: LoadBalancer
+  port: 8008 # or the desired port number
+
+serviceAccount:
+  create: true
+
+ingress:
+  enabled: false
+  annotations: {}
+  path: /
+  hosts:
+    - chart-example.local
+  tls: []
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+#helm create flight-booking-system
+#helm package . 
+#helm install flight-booking-system ./flight-booking-system-0.1.0.tgz
+#helm uninstall chartname
